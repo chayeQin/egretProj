@@ -9,8 +9,6 @@ enum ButtonState {
     TOUCH_STATE_DISABLED
 }
 
-
-
 class Button extends egret.DisplayObjectContainer {
     private _normalImg : egret.Bitmap;
     private _selectedImg : egret.Bitmap;
@@ -236,60 +234,57 @@ class Button extends egret.DisplayObjectContainer {
     }
 
     public onEnterFrame(evt : egret.Event){
-        if (this.dirty){
-            if (this.titleText=="hello"){
-                console.log("dirty");
-            }
-            
-            this.dirty = false;
-             this._label.anchorOffsetX = this._label.width/2;
-             this._label.anchorOffsetY = this._label.height/2;
+        if (!this.dirty){
+            return
+        }
 
-            if (this.scale9Enabled) {
-                this._normalImg.scale9Grid = this.scale9Grid;
-                this._selectedImg.scale9Grid = this.scale9Grid;
-                this._disableImg.scale9Grid = this.scale9Grid;
-            }else {
-                this._normalImg.scale9Grid = null;
-                this._selectedImg.scale9Grid = null;
-                this._disableImg.scale9Grid = null;
-            }
+        this.dirty = false;
+        
+        this._label.anchorOffsetX = this._label.width/2;
+        this._label.anchorOffsetY = this._label.height/2;
 
-            switch(this._touchState) {
-                case ButtonState.TOUCH_STATE_NORMAL: // 普通状态
-                    this._normalImg.visible = true;
-                    this._selectedImg.visible = false;
+        if (this.scale9Enabled) {
+            this._normalImg.scale9Grid = this.scale9Grid;
+            this._selectedImg.scale9Grid = this.scale9Grid;
+            this._disableImg.scale9Grid = this.scale9Grid;
+        }else {
+            this._normalImg.scale9Grid = null;
+            this._selectedImg.scale9Grid = null;
+            this._disableImg.scale9Grid = null;
+        }
+
+        switch(this._touchState) {
+            case ButtonState.TOUCH_STATE_NORMAL: // 普通状态
+                this._normalImg.visible = true;
+                this._selectedImg.visible = false;
+                this._disableImg.visible = false;
+                this._normalImg.scaleX = 1.0;
+                this._normalImg.scaleY = 1.0;
+                this._label.scaleX = 1.0;
+                this._label.scaleY = 1.0;
+                grey(this, false)
+                break;
+            case ButtonState.TOUCH_STATE_PRESSED: // 按下的状态
+                if (this._selectedImg.texture){
+                    this._normalImg.visible = false;
+                    this._selectedImg.visible = true;
                     this._disableImg.visible = false;
-                    this._normalImg.scaleX = 1.0;
-                    this._normalImg.scaleY = 1.0;
-                    this._label.scaleX = 1.0;
-                    this._label.scaleY = 1.0;
-                    grey(this, false)
-                    break;
-                case ButtonState.TOUCH_STATE_PRESSED: // 按下的状态
-                    if (this._selectedImg.texture){
-                        this._normalImg.visible = false;
-                        this._selectedImg.visible = true;
-                        this._disableImg.visible = false;
-                    }else{
-                        this._normalImg.scaleX = 1.0 + this._zoomScale;
-                        this._normalImg.scaleY = 1.0 + this._zoomScale;
-                        this._label.scaleX = 1.0 + this._zoomScale;
-                        this._label.scaleY = 1.0 + this._zoomScale;
-                    }
-                    break;
-                case ButtonState.TOUCH_STATE_DISABLED: // 禁用状态
-                    if (this._disableImg.texture){
-                        this._normalImg.visible = false
-                        this._selectedImg.visible = false;
-                        this._disableImg.visible = true;
-                    }else{
-                        grey(this);
-                    }
-                    break;
-            }
+                }else{
+                    this._normalImg.scaleX = 1.0 + this._zoomScale;
+                    this._normalImg.scaleY = 1.0 + this._zoomScale;
+                    this._label.scaleX = 1.0 + this._zoomScale;
+                    this._label.scaleY = 1.0 + this._zoomScale;
+                }
+                break;
+            case ButtonState.TOUCH_STATE_DISABLED: // 禁用状态
+                if (this._disableImg.texture){
+                    this._normalImg.visible = false
+                    this._selectedImg.visible = false;
+                    this._disableImg.visible = true;
+                }else{
+                    grey(this);
+                }
+                break;
         }
     }
-
-   
 }
