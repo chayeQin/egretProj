@@ -8,7 +8,8 @@
 列表容器
 走马灯
 富文本
-
+checkbox
+radiobutton
 字库
 场景管理
 弹窗管理
