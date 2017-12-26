@@ -16,6 +16,7 @@
 		"bin-debug/scenes/GameScene.js",
 		"bin-debug/util/Button.js",
 		"bin-debug/util/DisplayUtil.js",
+		"bin-debug/util/TextField.js",
 		"bin-debug/util/Util.js"
 	]
 }

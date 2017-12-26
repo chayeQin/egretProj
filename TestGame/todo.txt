@@ -1,13 +1,14 @@
 图片    done
 九宫格   done
 按钮	done
-输入框
-文本特效(outline, shadow)
+输入框 done
+动画  
+文本特效(outline, shadow)  done
 进度条
 列表容器
 走马灯
 富文本
-动画
+
 字库
 场景管理
 弹窗管理
