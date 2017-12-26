@@ -9,6 +9,8 @@ enum ButtonState {
     TOUCH_STATE_DISABLED
 }
 
+
+
 class Button extends egret.DisplayObjectContainer {
     private _normalImg : egret.Bitmap;
     private _selectedImg : egret.Bitmap;
@@ -86,7 +88,6 @@ class Button extends egret.DisplayObjectContainer {
         this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancel, this);
     }
-
     
     private onTouchBegin(evt : egret.Event){
         if (this._touchState == ButtonState.TOUCH_STATE_DISABLED) { 
@@ -236,6 +237,10 @@ class Button extends egret.DisplayObjectContainer {
 
     public onEnterFrame(evt : egret.Event){
         if (this.dirty){
+            if (this.titleText=="hello"){
+                console.log("dirty");
+            }
+            
             this.dirty = false;
              this._label.anchorOffsetX = this._label.width/2;
              this._label.anchorOffsetY = this._label.height/2;
@@ -259,7 +264,7 @@ class Button extends egret.DisplayObjectContainer {
                     this._normalImg.scaleY = 1.0;
                     this._label.scaleX = 1.0;
                     this._label.scaleY = 1.0;
-                    // TODO: 灰度图实现， 让normalImg变原色
+                    grey(this, false)
                     break;
                 case ButtonState.TOUCH_STATE_PRESSED: // 按下的状态
                     if (this._selectedImg.texture){
@@ -279,7 +284,7 @@ class Button extends egret.DisplayObjectContainer {
                         this._selectedImg.visible = false;
                         this._disableImg.visible = true;
                     }else{
-                         // TODO: 灰度图实现， 让normalImg变灰
+                        grey(this);
                     }
                     break;
             }

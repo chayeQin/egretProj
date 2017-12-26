@@ -32,9 +32,4 @@ class DisplayUtil {
         img.scale9Grid = rect;
         return img;
     }
-
-    public static button(){
-
-    }
-
 }
