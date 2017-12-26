@@ -2,10 +2,10 @@
 九宫格   done
 按钮	done
 输入框
+文本特效(outline, shadow)
+进度条
+列表容器
+走马灯
 富文本
 动画
 字库
-进度条
-文本特效(outline, shadow)
-列表容器
-走马灯
