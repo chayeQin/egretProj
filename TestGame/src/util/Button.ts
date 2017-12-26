@@ -135,8 +135,7 @@ class Button extends egret.DisplayObjectContainer {
         if (res){
             let texture: egret.Texture = RES.getRes(res);
             this._normalImg.texture = texture;
-            this._normalImg.anchorOffsetX = this._normalImg.width/2;
-            this._normalImg.anchorOffsetY = this._normalImg.height/2;
+            setAnchorPoint(this._normalImg, 0.5, 0.5);
         } else if (this._normalImg){
             this._normalImg.texture = null;
         }
@@ -148,9 +147,7 @@ class Button extends egret.DisplayObjectContainer {
         if (res){
             let texture: egret.Texture = RES.getRes(res);
             this._selectedImg.texture = texture;
-            this._selectedImg.anchorOffsetX = this._selectedImg.width/2;
-            this._selectedImg.anchorOffsetY = this._selectedImg.height/2;
-
+            setAnchorPoint(this._selectedImg, 0.5, 0.5);
         } else if (this._selectedImg){
            this._selectedImg.texture = null;
         }
@@ -161,8 +158,7 @@ class Button extends egret.DisplayObjectContainer {
         if (res){
             let texture: egret.Texture = RES.getRes(res);
             this._disableImg.texture = texture;
-            this._disableImg.anchorOffsetX = this._disableImg.width/2;
-            this._disableImg.anchorOffsetY = this._disableImg.height/2;
+            setAnchorPoint(this._disableImg, 0.5, 0.5);
         } else if (this._disableImg){
             this._disableImg.texture = null;
         }
@@ -239,9 +235,7 @@ class Button extends egret.DisplayObjectContainer {
         }
 
         this.dirty = false;
-        
-        this._label.anchorOffsetX = this._label.width/2;
-        this._label.anchorOffsetY = this._label.height/2;
+        setAnchorPoint(this._label, 0.5, 0.5);
 
         if (this.scale9Enabled) {
             this._normalImg.scale9Grid = this.scale9Grid;

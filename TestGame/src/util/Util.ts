@@ -29,3 +29,8 @@ function grey(obj:egret.DisplayObject, boo?:boolean){
         }
     }
 }
+
+function setAnchorPoint(obj:egret.DisplayObject, x:number, y:number){
+    obj.anchorOffsetX = obj.width * x;
+    obj.anchorOffsetY = obj.height * y;
+}
