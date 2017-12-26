@@ -3,11 +3,13 @@
  * @author qyp
  */
 
+enum ButtonState {
+    TOUCH_STATE_NORMAL,
+    TOUCH_STATE_PRESSED,
+    TOUCH_STATE_DISABLED
+}
 
 class Button extends egret.DisplayObjectContainer {
-    public static TOUCH_STATE_NORMAL = 1;
-    public static TOUCH_STATE_PRESSED = 2;
-    public static TOUCH_STATE_DISABLED = 3;
     private _normalImg : egret.Bitmap;
     private _selectedImg : egret.Bitmap;
     private _disableImg : egret.Bitmap;
@@ -18,12 +20,28 @@ class Button extends egret.DisplayObjectContainer {
     private _scale9Grid : egret.Rectangle;
     private _dirty : boolean;
     private _touchState : number;
+    private _thisObj : any;
+    private _callback: any;
 
     constructor(resCfg?:{normalRes?:string, selectedRes?:string, disabledRes?:string}, 
-                labCfg?:{text?:string, fontSize?:number, color?:number, font?:string}){
+                labCfg?:{text?:string, fontSize?:number, color?:number, font?:string}, 
+                callback?:Function, 
+                thisObj?:any){
         super();
         resCfg = resCfg ? resCfg : {};
         labCfg = labCfg ? labCfg : {};
+        this._callback = callback;
+        this._thisObj = thisObj;
+        this.init();
+        this.loadTexture(resCfg.normalRes, resCfg.selectedRes, resCfg.disabledRes);
+        this.titleText = labCfg.text ? labCfg.text : "";
+        this.textColor = labCfg.color ? labCfg.color : 0x000000;
+        this.fontSize = labCfg.fontSize ? labCfg.fontSize : 30;
+        this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onEnter, this);
+        this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.onExit, this);
+    }
+
+    private init(){
         this.zoomScale = 0.1;
         this.scale9Grid = new egret.Rectangle();
         this.scale9Enabled = false;
@@ -36,32 +54,10 @@ class Button extends egret.DisplayObjectContainer {
         this.addChild(this._selectedImg);
         this._disableImg = new egret.Bitmap();
         this.addChild(this._disableImg);
-        this.loadTexture(resCfg.normalRes, resCfg.selectedRes, resCfg.disabledRes);
-
         this._label = new egret.TextField;
         this.addChild(this._label);
-        this.titleText = labCfg.text ? labCfg.text : "";
-        this.textColor = labCfg.color ? labCfg.color : 0x000000;
-        this.fontSize = labCfg.fontSize ? labCfg.fontSize : 30;
-        
-        this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onEnter, this);
-        this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.onExit, this);
     }
-
-    private onEnter(evt:egret.Event) {
-        this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancel, this);
-    }
-
-    private onExit(evt:egret.Event) {
-        this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
-        this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-        this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
-        this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancel, this);
-    }
-
+    
     public destroy(){
         this.removeChild(this._normalImg);
         this._normalImg = null;
@@ -75,39 +71,68 @@ class Button extends egret.DisplayObjectContainer {
         this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.onExit, this);
     }
 
-    public onTouchBegin(evt : egret.Event){
-        if (this._touchState == Button.TOUCH_STATE_DISABLED) { 
+    private onEnter(evt:egret.Event) {
+        this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+        this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+        this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+        this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancel, this);
+        this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onReleaseOutSide, this);
+    }
+
+    private onExit(evt:egret.Event) {
+        this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onReleaseOutSide, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancel, this);
+    }
+
+    
+    private onTouchBegin(evt : egret.Event){
+        if (this._touchState == ButtonState.TOUCH_STATE_DISABLED) { 
             return
         }
 
-        this._touchState = Button.TOUCH_STATE_PRESSED;
+        this._touchState = ButtonState.TOUCH_STATE_PRESSED;
         this.dirty = true;
     }
 
-    public onTouchEnd(evt : egret.Event){
-        if (this._touchState == Button.TOUCH_STATE_DISABLED) { 
+    private onTouchEnd(evt : egret.Event){
+        if (this._touchState == ButtonState.TOUCH_STATE_DISABLED) { 
             return
         }
 
-        this._touchState = Button.TOUCH_STATE_NORMAL;
+        this._touchState = ButtonState.TOUCH_STATE_NORMAL;
+        this.dirty = true;
+
+        if (this._callback){
+            this._callback.call(this._thisObj, evt);
+        }
+    }
+
+    private onTouchCancel(evt : egret.Event){
+        if (this._touchState == ButtonState.TOUCH_STATE_DISABLED) { 
+            return
+        }
+        this._touchState = ButtonState.TOUCH_STATE_NORMAL;
         this.dirty = true;
     }
 
-    public onTouchCancel(evt : egret.Event){
-        if (this._touchState == Button.TOUCH_STATE_DISABLED) { 
+    private onReleaseOutSide(evt : egret.Event){
+        if (this._touchState == ButtonState.TOUCH_STATE_DISABLED) { 
             return
         }
-        this._touchState = Button.TOUCH_STATE_NORMAL;
+        this._touchState = ButtonState.TOUCH_STATE_NORMAL;
         this.dirty = true;
     }
 
     public loadTexture(normalRes?:string, selectedRes?:string, disabledRes?:string){
-        this.loadTextureNormal(normalRes);
-        this.loadTextureSelected(selectedRes);
-        this.loadTextureDisabled(disabledRes);
+        this.normalTexture = normalRes;
+        this.textureSelected = selectedRes;
+        this.textureDisabled = disabledRes;
     }
 
-    public loadTextureNormal(res:string){
+    public set normalTexture(res:string){
         if (res){
             let texture: egret.Texture = RES.getRes(res);
             this._normalImg.texture = texture;
@@ -120,7 +145,7 @@ class Button extends egret.DisplayObjectContainer {
         this.dirty = true;
     }
 
-    public loadTextureSelected(res:string){
+    public set textureSelected(res:string){
         if (res){
             let texture: egret.Texture = RES.getRes(res);
             this._selectedImg.texture = texture;
@@ -133,7 +158,7 @@ class Button extends egret.DisplayObjectContainer {
         this.dirty = true;
     }
 
-    public loadTextureDisabled(res:string){
+    public set textureDisabled(res:string){
         if (res){
             let texture: egret.Texture = RES.getRes(res);
             this._disableImg.texture = texture;
@@ -180,9 +205,9 @@ class Button extends egret.DisplayObjectContainer {
         this._enabled = boo;
         this.touchEnabled = boo;
         if (boo) {
-            this._touchState = Button.TOUCH_STATE_NORMAL;
+            this._touchState = ButtonState.TOUCH_STATE_NORMAL;
         }else {
-            this._touchState = Button.TOUCH_STATE_DISABLED;
+            this._touchState = ButtonState.TOUCH_STATE_DISABLED;
         }
         this.dirty = true
     }
@@ -226,7 +251,7 @@ class Button extends egret.DisplayObjectContainer {
             }
 
             switch(this._touchState) {
-                case Button.TOUCH_STATE_NORMAL: // 普通状态
+                case ButtonState.TOUCH_STATE_NORMAL: // 普通状态
                     this._normalImg.visible = true;
                     this._selectedImg.visible = false;
                     this._disableImg.visible = false;
@@ -236,7 +261,7 @@ class Button extends egret.DisplayObjectContainer {
                     this._label.scaleY = 1.0;
                     // TODO: 灰度图实现， 让normalImg变原色
                     break;
-                case Button.TOUCH_STATE_PRESSED: // 按下的状态
+                case ButtonState.TOUCH_STATE_PRESSED: // 按下的状态
                     if (this._selectedImg.texture){
                         this._normalImg.visible = false;
                         this._selectedImg.visible = true;
@@ -248,7 +273,7 @@ class Button extends egret.DisplayObjectContainer {
                         this._label.scaleY = 1.0 + this._zoomScale;
                     }
                     break;
-                case Button.TOUCH_STATE_DISABLED: // 禁用状态
+                case ButtonState.TOUCH_STATE_DISABLED: // 禁用状态
                     if (this._disableImg.texture){
                         this._normalImg.visible = false
                         this._selectedImg.visible = false;

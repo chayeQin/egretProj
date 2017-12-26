@@ -72,25 +72,30 @@ class GameScene extends BaseScene {
    
         this.img = img
         this.addChild(img);
-        this.btn = new Button({normalRes:"a_btn_01_png"}, {text:"hello"});
+        this.btn = new Button({normalRes:"a_btn_01_png", selectedRes:"a_btn_02_png", disabledRes:"a_btn_03_png"}, {text:"hello"}, this.onBtnClick, this);
         // let img = DisplayUtil.sprite("9sp_09_png");
         // img.x = 500;
         // img.y = 500;
         this.touchEnabled = true;
         this.tmp = true
-        this.addEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStage,this);
 
+        // let btn2= new Button({normalRes:"a_btn_01_png"}, {text:"hello"});
+        // this.addChild(btn2);
+        // btn2.x = 180;
+        // btn2.y = 180;
+        this.addEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStage,this);
     }
     private onAddToStage(event:egret.Event){
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchTab, this);
-
     }
 
+    private onBtnClick(evt:egret.Event){
+        console.log("on btn click");
+        this.btn.fontSize = 100;
+    }
     private tmp : boolean;
     private onTouchTab(evt:egret.TouchEvent) {
-        console.log("tab**************")
         if (this.tmp){
-            console.log("******fale")
             this.addChild(this.btn);
             this.btn.x = 200;
             this.btn.y = 200;
