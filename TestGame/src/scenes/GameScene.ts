@@ -70,21 +70,24 @@ class GameScene extends BaseScene {
         // let rect:egret.Rectangle = new egret.Rectangle(13, 13, 14, 15);
         let img = DisplayUtil.sprite("a_btn_01_png");
         img.x = 500;
-        img.y = 100;
+        img.y = 500;
         this.addChild(img);
         this.btn = new Button({normalRes:"a_btn_01_png"}, {text:"hello",color:0xC71585}, this.onBtnClick, this);
         this.addChild(this.btn);
         this.btn.x = 200;
         this.btn.y = 200;
         this.img = img
-        createAction(img, ["spa", 
-                                [
-                                    ["moveby", 2, 500, 0],
-                                    ["scaleto", 2, 1.5, 1.5]
-                                ]
-                        ])
-  
-                        
+        // createAction(img, ["rep", 
+        //                         [
+        //                             ["moveby", 2, 100, 0],
+        //                             ["moveby", 2, -100, 0]
+        //                         ]
+        //                 ])
+        let tw:egret.Tween = egret.Tween.get(img, {loop:true});
+        tw.to({x:400}, 3*1000);
+        tw.to({x:500}, 3*1000);
+        
+                        // egret.Ease
         // this.touchEnabled = true;
         // this.tmp = true
         // this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchTab, this);

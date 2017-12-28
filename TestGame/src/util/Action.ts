@@ -29,6 +29,11 @@ namespace Action {
         return tw.to({scaleX:x, scaleY:y}, t*1000);
     }
 
+    export function scaleby(target:egret.DisplayObject, t, x, y) : egret.Tween {
+        let tw:egret.Tween = egret.Tween.get(target);
+        return tw.to({scaleX:target.scaleX + x, scaleY:target.scaleY + y}, t*1000);
+    }
+
     export function seq(target:egret.DisplayObject, actLst:any[]) : egret.Tween {
         if (actLst.length == 0){
             return
@@ -43,19 +48,23 @@ namespace Action {
         return tw;
     }
 
-    export function spa(target:egret.DisplayObject, actLst:any[]) : egret.Tween {
-        let tw:egret.Tween = egret.Tween.get(target);
-        actLst.forEach((ele)=>{
-            tw = createAction(target, ele);
-        })
-        return tw;
-    }
 
     export function call(target:egret.DisplayObject, func:Function) : egret.Tween {
         let tw:egret.Tween = egret.Tween.get(target);
         tw.call(func);
         return tw;
     }
+
+    export function delay(target:egret.DisplayObject, t) : egret.Tween {
+        let tw:egret.Tween = egret.Tween.get(target);
+        return tw.wait(t);
+    }
+
+    export function rep(target:egret.DisplayObject) : egret.Tween {
+        let tw:egret.Tween = egret.Tween.get(target, {loop:true});
+        return 
+    }
+
 
 }
 
