@@ -80,4 +80,25 @@ function setAnchorPoint(obj:egret.DisplayObject, x:number, y:number){
     obj.anchorOffsetY = obj.height * y;
 }
 
+function moveto(tw, x, y, t){
+    console.log("moveto", tw, x, y, t);
+}
+
+function createAction(tw:egret.Tween, list:any[]) : egret.Tween {
+    
+    return 
+}
+// function run(actions){
+
+
+// }
+
+// run([
+//     "rep",
+//         ["seq",
+//             ["moveto", 0.5, 100, 100],
+//             ["call", func, thisObj],
+//             []
+//         ]
+// ])
 

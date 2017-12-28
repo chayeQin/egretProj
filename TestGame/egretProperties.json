@@ -23,6 +23,12 @@
       "name": "res"
     },
     {
+      "name": "eui"
+    },
+    {
+      "name": "socket"
+    },
+    {
       "name": "promise",
       "path": "./promise"
     }

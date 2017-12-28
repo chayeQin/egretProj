@@ -4,7 +4,7 @@
  */
 
 class DisplayUtil {
-    public static removeFromParent(obj: egret.DisplayObject) : void{
+    public static removeFromParent(obj: egret.DisplayObject) : void {
         if (obj && obj.parent) {
             obj.parent.removeChild(obj);
         }
@@ -14,7 +14,7 @@ class DisplayUtil {
         return egret.MainContext.instance.stage.stageWidth;
     }
 
-    public static get stageHeight() : number{
+    public static get stageHeight() : number {
         return egret.MainContext.instance.stage.stageHeight; 
     }
 
@@ -32,4 +32,21 @@ class DisplayUtil {
         img.scale9Grid = rect;
         return img;
     }
+
+    public static label(txt:string, fontSize?:number, color?:number) : egret.TextField {
+        let label:egret.TextField = new egret.TextField();
+        label.size = fontSize ? fontSize : 30;
+        label.textColor = color ? color : 0xffffff;
+        return label
+    }
+
+    public static labelOutLine(txt:string, fontSize?:number, color?:number, outlineColor?:number, outlineSize?:number) : egret.TextField {
+        let label:egret.TextField = new egret.TextField();
+        label.size = fontSize ? fontSize : 30;
+        label.textColor = color ? color : 0xffffff;
+        label.strokeColor = outlineColor ? outlineColor : 0x000000;
+        label.stroke = outlineSize ? outlineSize : 2;
+        return label
+    }
+
 }
