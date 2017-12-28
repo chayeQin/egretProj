@@ -80,17 +80,20 @@ function setAnchorPoint(obj:egret.DisplayObject, x:number, y:number){
     obj.anchorOffsetY = obj.height * y;
 }
 
-function moveto(tw, x, y, t){
-    console.log("moveto", tw, x, y, t);
+
+function createAction(target:egret.DisplayObject, list:any[]) : egret.Tween {
+    let funcName:string = list[0];
+    funcName = funcName.toLowerCase();
+    let func : Function = Action[funcName];
+    list.shift();
+    list.unshift(target);
+    console.log("params", list);
+    return func.apply(null, list);
 }
 
-function createAction(tw:egret.Tween, list:any[]) : egret.Tween {
-    
-    return 
-}
-// function run(actions){
-
-
+// function runAction(target, list){
+//     let tw = egret.Tween.get(target);
+//     createAction(target, list, tw);
 // }
 
 // run([

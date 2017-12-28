@@ -11,14 +11,16 @@
 	],
 	"game": [
 		"bin-debug/scenes/BaseScene.js",
-		"bin-debug/LoadingUI.js",
-		"bin-debug/Main.js",
+		"bin-debug/util/Util.js",
 		"bin-debug/manager/PopupMgr.js",
 		"bin-debug/manager/SceneMgr.js",
+		"bin-debug/LoadingUI.js",
 		"bin-debug/scenes/GameScene.js",
+		"bin-debug/util/Action.js",
 		"bin-debug/util/Button.js",
 		"bin-debug/util/DisplayUtil.js",
 		"bin-debug/util/Net.js",
-		"bin-debug/util/Util.js"
+		"bin-debug/util/Test.js",
+		"bin-debug/Main.js"
 	]
 }

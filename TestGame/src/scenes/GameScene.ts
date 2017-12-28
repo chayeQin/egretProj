@@ -76,23 +76,54 @@ class GameScene extends BaseScene {
         this.addChild(this.btn);
         this.btn.x = 200;
         this.btn.y = 200;
+        this.img = img
+        createAction(img, ["spa", 
+                                [
+                                    ["moveby", 2, 500, 0],
+                                    ["scaleto", 2, 1.5, 1.5]
+                                ]
+                        ])
+  
+                        
         // this.touchEnabled = true;
         // this.tmp = true
         // this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchTab, this);
 
-        let action:egret.Tween = egret.Tween.get(img);
-        action.to({x:300}, 10 * 300).to({y:500}, 10 * 300);
-        this.img = img;
-        this.action = action;
+        
+        // tw.to({x:300}, 1*1000)
+        // Action.moveby(tw.to({x:300}, 1*1000), 3, 100, 0, img);
+        // this.img = img;
+        // this.action = tw;
+        // this.img.rotation
+        // runAction(img, ["seq",
+        //                     ["moveto", 10, 10, 2],
+        //                     ["moveby", 20, 20, 2],
+        //                     ["scaleto", 1]
+        //                 ])
+
+        // let tw:egret.Tween = egret.Tween.get(img);
+        // sequence(callfuncs)
+
+        // tw.to({x:300, y:100}, 3*1000)
+        //     .call(()=>{
+        //         let tw:egret.Tween = egret.Tween.get(img);
+        //         tw.to({y:img.y+100}, 3*1000)
+        //             .call(()=>{
+        //                 let tw:egret.Tween = egret.Tween.get(img);
+        //                 tw.to({scaleX:1.3}, 3*1000)
+        //             })
+
+        //     })
+
+        // let ary = [1,2,3,4,5,6,7];
+        // console.log(ary);
+        // ary.shift();
+        // console.log(ary);
 
 
-        let action2:egret.Tween = egret.Tween.get(img);
-        action2.to({y:200}, 10 * 500);
-        this.action2 = action2;
-
-        __global["moveto"].apply(null, [null, 10, 10, 10])
 
         
+        // Action["moveto"].apply(null, [null, 10, 10, 10])
         // var text:egret.TextField = new egret.TextField();
         // // textIput.type = egret.TextFieldType.INPUT;
         // text.text = "hello"
@@ -127,11 +158,10 @@ class GameScene extends BaseScene {
     }
 
     private onBtnClick(evt:egret.Event){
-        console.log("on btn click");
-
-        
-
+        console.log("on btn click", this.img.x, this.img.y);
+    
     }
+
     private tmp : boolean;
     private onTouchTab(evt:egret.TouchEvent) {
         console.log("*******onTouchTab**")
