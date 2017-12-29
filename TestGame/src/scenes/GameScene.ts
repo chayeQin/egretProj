@@ -86,7 +86,6 @@ class GameScene extends BaseScene {
         let tw:egret.Tween = egret.Tween.get(img, {loop:true});
         tw.to({x:400}, 3*1000);
         tw.to({x:500}, 3*1000);
-        
                         // egret.Ease
         // this.touchEnabled = true;
         // this.tmp = true
@@ -122,10 +121,6 @@ class GameScene extends BaseScene {
         // console.log(ary);
         // ary.shift();
         // console.log(ary);
-
-
-
-        
         // Action["moveto"].apply(null, [null, 10, 10, 10])
         // var text:egret.TextField = new egret.TextField();
         // // textIput.type = egret.TextFieldType.INPUT;
@@ -154,8 +149,6 @@ class GameScene extends BaseScene {
         // img2.x = 700;
         // img2.y = 400;
         // grey(img2)
-
-
     }
     private onAddToStage(event:egret.Event){
     }
