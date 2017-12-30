@@ -1,0 +1,90 @@
+{
+	"groups": [
+		{
+			"keys": "description_json,boom_png,btn_jump_a_png,btn_jump_b_png,btn_yg_l_png,btn_yg_m_png,btn_yg_r_png,cat_jump_png,cat_run1_png,cat_run2_png,coin_jin_png,coin_xing_png,coin_yin_png,qjb_bg_jpg,cat_runAni_json,cat_runAni_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "config/description.json",
+			"type": "json",
+			"name": "description_json"
+		},
+		{
+			"name": "boom_png",
+			"type": "image",
+			"url": "assets/boom.png"
+		},
+		{
+			"name": "btn_jump_a_png",
+			"type": "image",
+			"url": "assets/btn_jump_a.png"
+		},
+		{
+			"name": "btn_jump_b_png",
+			"type": "image",
+			"url": "assets/btn_jump_b.png"
+		},
+		{
+			"name": "btn_yg_l_png",
+			"type": "image",
+			"url": "assets/btn_yg_l.png"
+		},
+		{
+			"name": "btn_yg_m_png",
+			"type": "image",
+			"url": "assets/btn_yg_m.png"
+		},
+		{
+			"name": "btn_yg_r_png",
+			"type": "image",
+			"url": "assets/btn_yg_r.png"
+		},
+		{
+			"name": "cat_jump_png",
+			"type": "image",
+			"url": "assets/cat_jump.png"
+		},
+		{
+			"name": "cat_run1_png",
+			"type": "image",
+			"url": "assets/cat_run1.png"
+		},
+		{
+			"name": "cat_run2_png",
+			"type": "image",
+			"url": "assets/cat_run2.png"
+		},
+		{
+			"name": "coin_jin_png",
+			"type": "image",
+			"url": "assets/coin_jin.png"
+		},
+		{
+			"name": "coin_xing_png",
+			"type": "image",
+			"url": "assets/coin_xing.png"
+		},
+		{
+			"name": "coin_yin_png",
+			"type": "image",
+			"url": "assets/coin_yin.png"
+		},
+		{
+			"name": "qjb_bg_jpg",
+			"type": "image",
+			"url": "assets/qjb_bg.jpg"
+		},
+		{
+			"name": "cat_runAni_json",
+			"type": "json",
+			"url": "assets/cat_runAni.json"
+		},
+		{
+			"name": "cat_runAni_png",
+			"type": "image",
+			"url": "assets/cat_runAni.png"
+		}
+	]
+}
